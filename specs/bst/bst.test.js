@@ -16,8 +16,51 @@ right - Node/object - the right node which itself may be another tree
 
 */
 
+class Node {
+  constructor(value) {
+    this.value = value;
+    this.left = null;
+    this.right = null;
+  }
+}
+
 class Tree {
   // code goes here
+  constructor() {
+    this.root = null;
+  }
+
+  // method to add a value to the tree
+  add(value) {
+    const newNode = new Node(value);
+    if (this.root === null) {
+      this.root = newNode;
+    } else {
+      this._addNode(this.root, newNode);
+    }
+  }
+
+  // Recursive method to add nodes in the correct position
+  _addNode(currentNode, newNode) {
+    if (newNode.value < currentNode.value) {
+      if (currentNode.left === null) {
+        currentNode.left = newNode;
+      } else {
+        this._addNode(currentNode.left, newNode);
+      }
+    } else {
+      if (currentNode.right === null) {
+        currentNode.right = newNode;
+      } else {
+        this._addNode(currentNode.right, newNode);
+      }
+    }
+  }
+
+  // method to convert the tree to an object for easy testing
+  toObject() {
+    return this.root;
+  }
 }
 
 // you might consider using a Node class too

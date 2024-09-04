@@ -18,7 +18,48 @@
 */
 
 class ArrayList {
-  // code goes here
+  constructor() {
+    // Object to store elements and length property
+    this.data = {};
+    this.length = 0;
+  }
+
+  // Add a value to the end of the list
+  push(value) {
+    this.data[this.length] = value;
+    this.length++;
+  }
+
+  // Remove and return the last value in the list
+  pop() {
+    if (this.length === 0) return undefined;
+    const lastElement = this.data[this.length - 1];
+    delete this.data[this.length - 1];
+    this.length--;
+    return lastElement;
+  }
+
+  // Get the value at a specific index
+  get(index) {
+    return this.data[index];
+  }
+
+  // Delete a value at a specific index, shift the remaining elements, and return the deleted value
+  delete(index) {
+    if (index < 0 || index >= this.length) return undefined;
+    const deletedValue = this.data[index];
+    this._collapseTo(index);
+    return deletedValue;
+  }
+
+  // Helper method to shift elements after deletion
+  _collapseTo(index) {
+    for (let i = index; i < this.length - 1; i++) {
+      this.data[i] = this.data[i + 1];
+    }
+    delete this.data[this.length - 1];
+    this.length--;
+  }
 }
 
 // unit tests

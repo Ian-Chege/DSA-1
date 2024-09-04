@@ -11,6 +11,15 @@
 
 function nestedAdd(array) {
   // write code here
+  let sum = 0;
+  for (let element of array) {
+    if (Array.isArray(element)) {
+      sum += nestedAdd(element);
+    } else {
+      sum += element;
+    }
+  }
+  return sum;
 }
 
 test.skip("nested arrays addition", () => {

@@ -1,18 +1,46 @@
+/* 
+In-Order Traversal (Left, Root, Right)
+Pre-Order Traversal (Root, Left, Right)
+Post-Order Traversal (Left, Right, Root)
+
+In-Order: Used in binary search trees to retrieve values in a sorted order.
+Pre-Order: Useful for copying trees or generating prefix expressions.
+Post-Order: Used in evaluating or parsing mathematical expressions, and for freeing up memory in some languages.
+*/
+
 const preorderTraverse = (node, array) => {
   // code goes here
+  if (!node) return array;
+  array.push(node.value); // visit the root node first
+  array = preorderTraverse(node.left, array); // recursively traverse the left subtree
+  array = preorderTraverse(node.right, array); // recursively traverse the right subtree
+
+  return array;
 };
 
 const inorderTraverse = (node, array) => {
   // code goes here
+  if (!node) return array;
+  array = inorderTraverse(node.left, array); // recursively traverse the left subtree
+  array.push(node.value); // visit the root node
+  array = inorderTraverse(node.right, array); // recursively traverse the right subtree
+
+  return array;
 };
 
 const postorderTraverse = (node, array) => {
   // code goes here
+  if (!node) return array;
+  array = postorderTraverse(node.left, array);
+  array = postorderTraverse(node.right, array);
+  array.push(node.value);
+
+  return array;
 };
 
 // unit tests
 // do not modify the below code
-test.skip("depth-first traversals", function () {
+describe.skip("depth-first traversals", function () {
   const tree = {
     value: 8,
     left: {
@@ -22,9 +50,9 @@ test.skip("depth-first traversals", function () {
         left: {
           value: 2,
           left: null,
-          right: null
+          right: null,
         },
-        right: null
+        right: null,
       },
       right: {
         value: 5,
@@ -34,10 +62,10 @@ test.skip("depth-first traversals", function () {
           left: {
             value: 6,
             left: null,
-            right: null
-          }
-        }
-      }
+            right: null,
+          },
+        },
+      },
     },
     right: {
       value: 12,
@@ -46,62 +74,32 @@ test.skip("depth-first traversals", function () {
         left: {
           value: 9,
           left: null,
-          right: null
+          right: null,
         },
         right: {
           value: 11,
           left: null,
-          right: null
-        }
-      }
-    }
+          right: null,
+        },
+      },
+    },
   };
 
-  it("preorderTraverse", () => {
+  test("preorderTraverse", () => {
     expect(preorderTraverse(tree, [])).toEqual([
-      8,
-      4,
-      3,
-      2,
-      5,
-      7,
-      6,
-      12,
-      10,
-      9,
-      11
+      8, 4, 3, 2, 5, 7, 6, 12, 10, 9, 11,
     ]);
   });
 
-  it("inorderTraverse", () => {
+  test("inorderTraverse", () => {
     expect(inorderTraverse(tree, [])).toEqual([
-      2,
-      3,
-      4,
-      5,
-      6,
-      7,
-      8,
-      9,
-      10,
-      11,
-      12
+      2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12,
     ]);
   });
 
-  it("postorderTraverse", () => {
+  test("postorderTraverse", () => {
     expect(postorderTraverse(tree, [])).toEqual([
-      2,
-      3,
-      6,
-      7,
-      5,
-      4,
-      9,
-      11,
-      10,
-      12,
-      8
+      2, 3, 6, 7, 5, 4, 9, 11, 10, 12, 8,
     ]);
   });
 });

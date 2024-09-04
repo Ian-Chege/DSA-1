@@ -14,6 +14,27 @@
 
 function quickSort(nums) {
   // code goes here
+  // Base case: if the array has 0 or 1 element, it's already sorted
+  if (nums.length < 2) return nums;
+
+  // Choose the last element as the pivot
+  const pivot = nums[nums.length - 1];
+
+  // Create two arrays to store the elements smaller and larger than the pivot
+  const left = [];
+  const right = [];
+
+  // Loop through all elements (except the pivot) and partition them
+  for (let i = 0; i < nums.length - 1; i++) {
+    if (nums[i] < pivot) {
+      left.push(nums[i]); // elemets less than the pivot go to the left
+    } else {
+      right.push(nums[i]); // elements greater than the pivot go to the right
+    }
+  }
+
+  // Recursively sort the left and right partitions and concatenate them with the pivot
+  return [...quickSort(left), pivot, ...quickSort(right)];
 }
 
 // unit tests
